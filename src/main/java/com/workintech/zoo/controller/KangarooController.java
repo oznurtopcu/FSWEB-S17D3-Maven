@@ -2,6 +2,7 @@ package com.workintech.zoo.controller;
 
 import com.workintech.zoo.entity.Kangaroo;
 import com.workintech.zoo.exceptions.ZooException;
+import com.workintech.zoo.validations.ZooKangarooValidation;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class KangarooController {
 
     public Map<Long, Kangaroo> kangaroos;
+    //videoda keyi Integer olarak tuttuk
 
     @PostConstruct
     public void init() {
@@ -38,6 +40,13 @@ public class KangarooController {
         return kangaroos.get(id);
     }
 
+//    @GetMapping("/{id}")
+//    public Kangaroo getKangarooByIdNew(@PathVariable long id) {
+//        ZooKangarooValidation.isIdValid(id);
+//        ZooKangarooValidation.checkKangarooExistence(kangaroos, id, true);
+//        return kangaroos.get(id);
+//    }
+
     @PostMapping
     public Kangaroo addKangaroo(@RequestBody Kangaroo kangaroo) {
         if(kangaroo.getId() <= 0) {
@@ -48,11 +57,32 @@ public class KangarooController {
         //TODO: created http status dönecek
     }
 
+//    @PostMapping
+//    public Kangaroo saveKangaroo(@RequestBody Kangaroo kangaroo) {
+//        ZooKangarooValidation.checkKangarooExistence(kangaroos, kangaroo.getId(), false);
+//        ZooKangarooValidation.checkKangarooWeight(kangaroo.getWeight());
+//        kangaroos.put(kangaroo.getId(), kangaroo);
+//        return kangaroos.get(kangaroo.getId());
+//    }
+
     @PutMapping("/{id}")
     public Kangaroo updateKangaroo(@PathVariable long id, @RequestBody Kangaroo newKangaroo) {
         kangaroos.replace(id,newKangaroo);
         return kangaroos.get(id);
     }
+
+//    @PutMapping("/{id}")
+//    public Kangaroo update(@PathVariable long id, @RequestBody Kangaroo newKangaroo) {
+//        ZooKangarooValidation.isIdValid(id);
+//        ZooKangarooValidation.checkKangarooWeight(newKangaroo.getWeight());
+//        newKangaroo.setId(id);
+//        if(kangaroos.containsKey(id)) {
+//            kangaroos.put(id, newKangaroo);
+//            return kangaroos.get(id);
+//        } else {
+//            return saveKangaroo(newKangaroo);
+//        }
+//    }
 
     @DeleteMapping("/{id}")
     public Kangaroo deleteKangaroo(@PathVariable long id) {
@@ -60,5 +90,12 @@ public class KangarooController {
         kangaroos.remove(id);
         return kangaroo;
     }
+
+//    @DeleteMapping("/{id}")
+//    public Kangaroo delete(@PathVariable long id) {
+//        ZooKangarooValidation.isIdValid(id);
+//        ZooKangarooValidation.checkKangarooExistence(kangaroos, id, true);
+//        return kangaroos.remove(id);
+//    }
 
 }
