@@ -50,8 +50,13 @@ public class KoalaController {
 
     @PutMapping("/{id}")
     public Koala updateKoala(@PathVariable long id, @RequestBody Koala newKoala) {
-        koalas.replace(id,newKoala);
-        return koalas.get(id);
+        //eğer key varsa update et, key yoksa yeni kayıt olarak aç
+        if(koalas.containsKey(id)) {
+            koalas.replace(id,newKoala);
+            return koalas.get(id);
+        }else {
+            return addKoala(newKoala);
+        }
     }
 
     @DeleteMapping("/{id}")
