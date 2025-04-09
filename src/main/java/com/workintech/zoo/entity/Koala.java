@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Component
 public class Koala {
     private long id;
     private String name;
